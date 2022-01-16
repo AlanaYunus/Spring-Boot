@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Найденный пользователь</title>
+</head>
+<body>
+<div>
+    <form th:action="@{/user}" th:object="${user}" method="post">
+        <table>
+            <tr>
+                <th>Имя</th>
+                <th>Почтовый ящик</th>
+            </tr>
+            <tr>
+                <td th:text="${user.getUserName()}">Имя</td>
+                <td th:text="${user.getEmail()}">email</td>
+            </tr>
+        </table>
+        <br/>
+        <form>
+            <input type="button" value="Назад на главную страницу" onclick="history.back()">
+        </form>
+        <a href="javascript: document.logoutForm.submit()" role="menuitem"> Выйти</a>
+
+        <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+            <input hidden type="submit" value="Sign Out"/>
+        </form>
+    </form>
+</div>
+</body>
+</html>

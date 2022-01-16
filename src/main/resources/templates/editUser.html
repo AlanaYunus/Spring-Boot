@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменить пользователя</title>
+</head>
+<body>
+<h2>Изменить пользователя</h2>
+<div>
+
+    <form th:action="@{/admin/users/edit}" th:object="${user}" method="post">
+        <input type="hidden" name="id" th:value="${user.getId()}">
+        <fieldset>
+            <legend>Данные пользователя</legend>
+            <p>
+                <label th:for="userName">Имя</label>
+                <input type="text" name="userName" th:id="userName" th:value="${user.getUserName()}">
+            </p>
+            <p>
+                <label th:for="email">Email</label>
+                <input type="text" name="email" th:id="email" th:value="${user.getEmail()}"><br/>
+            </p>
+            <p>
+                <label th:for="password">Password</label>
+                <input type="password" name="password" th:id="password" th:value="${user.getPassword()}"><br/>
+            </p>
+
+            <p>
+                <label>Roles:
+                    <input type="checkbox" name="roles"
+                           th:each="role : ${allRoles}"
+                           th:text="${role.roleName}"
+                           th:value="${role.roleName}"
+                           th:field="*{roles}"
+                    />
+                </label>
+            </p>
+
+        </fieldset>
+        <form th:action="@{admin/edit/{id}(id=${user.id})}" th:object="${user}">
+            <button type="submit">Изменить данные</button>
+        </form>
+
+        <br/>
+        <form>
+            <input type="button" value="Назад к списку пользователей" onclick="history.back()">
+        </form>
+    </form>
+    <a href="javascript: document.logoutForm.submit()" role="menuitem"> Выйти</a>
+
+    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+        <input hidden type="submit" value="Sign Out"/>
+    </form>
+</div>
+</body>
+</html>
