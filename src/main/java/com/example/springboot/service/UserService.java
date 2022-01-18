@@ -13,7 +13,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -22,20 +21,30 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User findById(Long id){
+    public User findById(Long id) {
         return userRepository.getOne(id);
     }
 
-    public List<User> findAll(){
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
-    public User saveUser(User user){
+    public User saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
-    public void deleteById(Long id){
+    public User editUser(User user) {
+        User userOld = userRepository.getById(user.getId());
+        if (user.getPassword().equals(userOld.getPassword())) {
+            return userRepository.save(user);
+        } else {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            return userRepository.save(user);
+        }
+    }
+
+    public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
 

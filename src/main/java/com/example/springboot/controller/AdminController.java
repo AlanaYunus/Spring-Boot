@@ -1,4 +1,4 @@
-package com.example.springboot.Controller;
+package com.example.springboot.controller;
 
 import com.example.springboot.model.User;
 import com.example.springboot.service.RoleService;
@@ -63,7 +63,7 @@ public class AdminController {
 
     @PostMapping(value = "/edit")
     public String edit(@ModelAttribute("user") User user) {
-        userService.saveUser(user);
+        userService.editUser(user);
         return "successPage";
     }
 

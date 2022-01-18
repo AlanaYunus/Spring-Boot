@@ -21,6 +21,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyUserDetailsService userDetailsService;
 
+    @Autowired
+    private SuccessUserHandler successUserHandler;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
@@ -39,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .and()
                 .formLogin()
-//                .successHandler(successUserHandler) // подключаем наш SuccessHandler для перенеправления по ролям
+                .successHandler(successUserHandler) // подключаем наш SuccessHandler для перенеправления по ролям
 //                .permitAll()
                 .and()
                 .logout()
