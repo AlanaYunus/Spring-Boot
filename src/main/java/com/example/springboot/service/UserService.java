@@ -1,12 +1,13 @@
 package com.example.springboot.service;
 
-import com.example.springboot.model.User;
+import com.example.springboot.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.springboot.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -21,21 +22,21 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User findById(Long id) {
+    public UserEntity findById(Long id) {
         return userRepository.getOne(id);
     }
 
-    public List<User> findAll() {
+    public List<UserEntity> findAll() {
         return userRepository.findAll();
     }
 
-    public User saveUser(User user) {
+    public UserEntity saveUser(UserEntity user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
-    public User editUser(User user) {
-        User userOld = userRepository.getById(user.getId());
+    public UserEntity editUser(UserEntity user) {
+        UserEntity userOld = userRepository.getById(user.getId());
         if (user.getPassword().equals(userOld.getPassword())) {
             return userRepository.save(user);
         } else {
@@ -48,5 +49,8 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    public Optional<UserEntity> findByUserName(String name) {
+        return userRepository.findByUserName(name);
+    }
 }
 

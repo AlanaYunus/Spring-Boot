@@ -1,6 +1,6 @@
 package com.example.springboot.controller;
 
-import com.example.springboot.model.User;
+import com.example.springboot.model.UserEntity;
 import com.example.springboot.service.RoleService;
 import com.example.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class AdminController {
 
     private final RoleService roleService;
 
-   @Autowired
+    @Autowired
     public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
@@ -28,41 +28,41 @@ public class AdminController {
 
     @GetMapping("")
     public String allUsers(ModelMap model) {
-        List<User> users = userService.findAll();
+        List<UserEntity> users = userService.findAll();
         model.addAttribute("users", users);
         return "users";
     }
 
     @GetMapping("/{id}")
     public String getById(ModelMap model, @PathVariable("id") Long id) {
-        User user = userService.findById(id);
+        UserEntity user = userService.findById(id);
         model.addAttribute("user", user);
         return "user";
     }
 
     @GetMapping("/addddd")
     public String newPerson(ModelMap model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new UserEntity());
         model.addAttribute("allRoles", roleService.findAll());
         return "add";
     }
 
     @PostMapping(value = "/add")
-    public String add(@ModelAttribute("user") User user) {
+    public String add(@ModelAttribute("user") UserEntity user) {
         userService.saveUser(user);
         return "successPage";
     }
 
     @GetMapping(value = "/edit/{id}")
     public String edit(ModelMap model, @PathVariable("id") Long id) {
-        User user = userService.findById(id);
+        UserEntity user = userService.findById(id);
         model.addAttribute("user", user);
         model.addAttribute("allRoles", roleService.findAll());
         return "editUser";
     }
 
     @PostMapping(value = "/edit")
-    public String edit(@ModelAttribute("user") User user) {
+    public String edit(@ModelAttribute("user") UserEntity user) {
         userService.editUser(user);
         return "successPage";
     }

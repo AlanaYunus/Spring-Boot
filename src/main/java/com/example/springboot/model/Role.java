@@ -13,11 +13,11 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column (unique = true)
+    @Column(unique = true)
     private String roleName;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "roles")
-    private Set<User> users;
+    private Set<UserEntity> users;
 
     public Role() {
     }
@@ -42,11 +42,11 @@ public class Role implements GrantedAuthority {
         this.roleName = roleName;
     }
 
-    public Set<User> getUsers() {
+    public Set<UserEntity> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(Set<UserEntity> users) {
         this.users = users;
     }
 

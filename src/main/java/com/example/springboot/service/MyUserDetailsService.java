@@ -1,7 +1,7 @@
 package com.example.springboot.service;
 
 import com.example.springboot.model.Role;
-import com.example.springboot.model.User;
+import com.example.springboot.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,11 +24,11 @@ public class MyUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-   @Transactional
+    @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = userRepository.findByUserName(userName).get();
+        UserEntity user = userRepository.findByUserName(userName).get();
         String dBuserName = user.getUserName();
-        if(dBuserName == null){
+        if (dBuserName == null) {
             throw new UsernameNotFoundException("User not authorized.");
         }
         List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
@@ -44,8 +44,10 @@ public class MyUserDetailsService implements UserDetailsService {
         return grantedAuthorities;
     }
 
-    private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
+    private UserDetails buildUserForAuthentication(UserEntity user, List<GrantedAuthority> authorities) {
         return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
                 user.getActive(), true, true, true, authorities);
     }
+
+
 }

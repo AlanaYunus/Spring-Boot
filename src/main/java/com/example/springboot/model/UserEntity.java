@@ -1,17 +1,21 @@
 package com.example.springboot.model;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.security.auth.Subject;
+import java.security.Principal;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class UserEntity implements Principal, UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +31,7 @@ public class User implements UserDetails {
     @Transient
     private String passwordConfirm;
 
-    private boolean active=true;
+    private boolean active = true;
 
     public boolean getActive() {
         return active;
@@ -42,10 +46,10 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles = new HashSet<>();
 
-    public User() {
+    public UserEntity() {
     }
 
-    public User(String userName, String email, String password, String passwordConfirm, Set<Role> roles) {
+    public UserEntity(String userName, String email, String password, String passwordConfirm, Set<Role> roles) {
         this.userName = userName;
         this.email = email;
         this.password = password;
@@ -130,6 +134,11 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String getName() {
+        return userName;
     }
 
 }

@@ -17,15 +17,15 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
-    public List<Role> findAll(){
+    public List<Role> findAll() {
         return roleRepository.findAll();
     }
 
-    public Role saveRole(Role role){
+    public Role saveRole(Role role) {
         return roleRepository.save(role);
     }
 
-    public Role findById(Long id){
+    public Role findById(Long id) {
         return roleRepository.getOne(id);
     }
 

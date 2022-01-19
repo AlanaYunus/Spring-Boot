@@ -1,7 +1,7 @@
 package com.example.springboot.config;
 
 import com.example.springboot.model.Role;
-import com.example.springboot.model.User;
+import com.example.springboot.model.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.example.springboot.service.RoleService;
@@ -26,7 +26,7 @@ public class StartData {
         roleService.saveRole(new Role("ROLE_ADMIN"));
         roleService.saveRole(new Role("ROLE_USER"));
 
-        User admin = new User();
+        UserEntity admin = new UserEntity();
         admin.setUserName("admin");
         admin.setPassword("1234");
         Set<Role> roleSetAdmin = new HashSet<>();
@@ -36,7 +36,7 @@ public class StartData {
 
         userService.saveUser(admin);
 
-        User normalUser = new User();
+        UserEntity normalUser = new UserEntity();
         normalUser.setUserName("bob");
         normalUser.setPassword("1234");
         Set<Role> roleSetUser = new HashSet<>();
